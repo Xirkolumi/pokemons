@@ -88,6 +88,15 @@
           },
           "defaultConfiguration": "development"
         },
+        
+        "test": {
+          "builder": "@angular-builders/jest:run",
+          "options": {
+            "styles": [
+              "src/styles.scss"
+            ]
+          }
+        },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {

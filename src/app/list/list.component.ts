@@ -6,7 +6,6 @@ import { PokemonListItem } from './list.model';
 import { ListState } from './store/list.state';
 import { Observable } from 'rxjs';
 import { PageEvent } from '@angular/material/paginator';
-import { MatInput } from '@angular/material/input';
 
 @Component({
   selector: 'app-list',
