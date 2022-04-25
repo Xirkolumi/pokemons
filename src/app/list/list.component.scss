@@ -1,0 +1,24 @@
+tr td img{
+  transition: .2s;
+  position: relative;
+}
+
+@media(min-width: 768px) 
+{
+  tr td img:hover{
+    transform: scale(10);
+    z-index: 1;
+  }  
+}
+
+td.mat-cell {
+  padding: 1rem 1rem;
+}
+th.mat-header-cell {
+  padding: 1rem 1rem;
+}
+
+.error{
+  padding: 1rem;
+  background-color: darksalmon;
+}

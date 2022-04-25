@@ -1,0 +1,86 @@
+dl {
+    display: grid;
+    grid-template-columns: auto auto;
+    dt {
+        padding-right: 5rem;
+    }
+
+    dd {
+        margin: 0;
+    }
+
+    dt:nth-child(1),
+    dd:nth-child(2) {
+        font-weight: bold;
+    }
+}
+
+p{
+    font-size: larger;
+    font-weight: bolder;
+}
+
+.container {
+    display: grid;
+    padding: 1rem;
+    gap: 1rem;
+    grid-template-columns: min-content min-content;
+    grid-template-rows: min-content min-content min-content;
+    grid-template-areas:
+        "image stats"
+        "image additional-stats"
+        "abilities types"
+        "moves moves";
+}
+
+.image {
+    grid-area: image;
+}
+
+.stats {
+    grid-area: stats;
+}
+
+.additional-stats {
+    grid-area: additional-stats;
+}
+
+.abilities {
+    grid-area: abilities;
+}
+
+.types {
+    grid-area: types;
+}
+
+.moves {
+    grid-area: moves;
+}
+
+@media (max-width: 768px) {
+    .container {
+        display: grid;
+        padding: 1rem;
+        gap: 1rem;
+        grid-template-columns: min-content;
+        grid-template-rows: min-content min-content min-content min-content min-content min-content;
+        grid-template-areas:
+            "image"
+            "stats"
+            "additional-stats"
+            "abilities"
+            "types"
+            "moves";
+    }
+
+    .image img {
+        width: calc(100vw - 3rem);
+    }
+}
+@media (min-width: 768px) {
+    .container {
+        width: fit-content;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}

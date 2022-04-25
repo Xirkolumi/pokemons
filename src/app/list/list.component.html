@@ -1,0 +1,68 @@
+<div fxLayout fxLayoutAlign="center center">
+  <mat-form-field>
+    <input matInput #nameFilter type="text" (change)="doFilter($event)" placeholder="Filter by name (exact)">
+
+  </mat-form-field>
+  <button mat-icon-button (click)="clearFilter()">
+    <mat-icon class="mat-18">close</mat-icon>
+  </button>
+</div>
+<div *ngIf="error | async" fxLayout fxLayoutAlign="center center" class="error">
+  {{error | async}}
+</div>
+<div fxLayout fxLayoutAlign="center center">
+  <table mat-table [dataSource]="dataSource">
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> Id </th>
+      <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+    </ng-container>
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Name </th>
+      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="sprites">
+      <th mat-header-cell *matHeaderCellDef> Image </th>
+      <td mat-cell *matCellDef="let element">
+        <img height="50" src="{{element.sprites.other['official-artwork'].front_default}}" loading="lazy">
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="details">
+      <th mat-header-cell *matHeaderCellDef> Details </th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-icon-button color="primary" [routerLink]="element.id">
+          <mat-icon class="mat-18">reorder</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="update">
+      <th mat-header-cell *matHeaderCellDef> Pokemon I've caught </th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-icon-button [color]="element.caught ? 'accent' : null"
+          (click)="toggleCaught(element.id, element.caught)">
+          <mat-icon *ngIf="element.caught" class="mat-18">check_circle</mat-icon>
+          <mat-icon *ngIf="!element.caught" class="mat-18">radio_button_unchecked</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="delete">
+      <th mat-header-cell *matHeaderCellDef> Pokemon Wishlist </th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-icon-button [color]="element.wishlist ? 'warn' : null"
+          (click)="toggleWishList(element.id, element.wishlist)">
+          <mat-icon *ngIf="element.wishlist" class="mat-18">favorite</mat-icon>
+          <mat-icon *ngIf="!element.wishlist" class="mat-18">favorite_border</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>
+
+<div fxLayout fxLayoutAlign="center center">
+  <mat-paginator [pageSize]="10" [pageSizeOptions]="[10, 20, 50]" [length]="total | async"
+    (page)="handlePageEvent($event)">
+  </mat-paginator>
+</div>
