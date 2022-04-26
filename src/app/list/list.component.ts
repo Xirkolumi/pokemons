@@ -1,10 +1,11 @@
+import { BaseComponent } from './../_shared/utils';
 import { AddToCaughtList as AddToCaughtList, AddToWishList, DeleteFromCaughtList as DeleteFromCaughtList, DeleteFromWishList, GetItemsPage, GetItemsPageOffset, SetFilterByName } from './store/list.actions';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { Select, Store } from '@ngxs/store';
 import { PokemonListItem } from './list.model';
 import { ListState } from './store/list.state';
-import { Observable } from 'rxjs';
+import { Observable, take, takeUntil } from 'rxjs';
 import { PageEvent } from '@angular/material/paginator';
 
 @Component({
@@ -12,7 +13,7 @@ import { PageEvent } from '@angular/material/paginator';
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })
-export class ListComponent implements OnInit {
+export class ListComponent extends BaseComponent implements OnInit {
   public displayedColumns = ['id', 'name', 'sprites', 'details', 'update', 'delete'];
   public dataSource = new MatTableDataSource<PokemonListItem>();
 
@@ -22,11 +23,13 @@ export class ListComponent implements OnInit {
 
   @ViewChild('nameFilter') nameFilter?: any;
 
-  constructor(private store: Store) { }
+  constructor(private store: Store) { 
+    super();
+  }
 
   ngOnInit() {
     this.getPokemons();
-    this.listItems?.subscribe(x => this.dataSource.data = x);
+    this.listItems?.pipe(takeUntil(this.destroyed$)).subscribe(x => this.dataSource.data = x);
   }
 
   public getPokemons() {
@@ -61,6 +64,6 @@ export class ListComponent implements OnInit {
   }
 
   handlePageEvent(event: PageEvent) {
-    this.store.dispatch(new GetItemsPageOffset(event)).subscribe(() => this.getPokemons());
+    this.store.dispatch(new GetItemsPageOffset(event)).pipe(take(1)).subscribe(() => this.getPokemons());
   }
 }

@@ -1,5 +1,5 @@
 import { PokemonListItem } from './../list/list.model';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { take } from 'rxjs';
 import { ListItemHttpService } from './list-item-http.service';

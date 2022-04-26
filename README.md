@@ -22,3 +22,9 @@ Run `ng test` to execute the unit tests via jest.
 
 Run `npx playwright test` to execute the end-to-end tests.
 
+## TODO:
+* add functionality to details page - extract component for showing types, abilities, additional stats, add dedicated component for moves preview ( loading more data from API when opening move details ), refator list-item to show tabs for additional data (types, abilities etc.), investigate image fetching optimization on list (now loading full size imgs), 
+* e2e tests for local development
+* add missing unit tests
+* add handling of unsubscribing from rxjs streams ( i.e. `@ngneat/until-destroy` )
+
