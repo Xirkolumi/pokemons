@@ -133,19 +133,21 @@ export class ListState {
     let state = getState();
 
     this.listHttpService.getPokemon(payload)
-      .subscribe((result: PokemonListItem) => {
-        result.wishlist = state.wishList.indexOf(result.id) >= 0 ? true : false;
-        result.caught = state.caughtList.indexOf(result.id) >= 0 ? true : false;
-        setState({
-          ...state, list: [result], error: ''
-        })
-      },
-        () => {
+      .subscribe({
+        next: (result: PokemonListItem) => {
+          result.wishlist = state.wishList.indexOf(result.id) >= 0 ? true : false;
+          result.caught = state.caughtList.indexOf(result.id) >= 0 ? true : false;
+          setState({
+            ...state, list: [result], error: ''
+          })
+        },
+        error: () => {
           setState({
             ...state,
             error: `Pokemon ' ${payload} ' not found!`
           })
-        })
+        }
+      })
   }
 
   @Action(GetItemsPage)
